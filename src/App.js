@@ -1,12 +1,15 @@
 import { Console } from '@woowacourse/mission-utils';
 import TimeValidator from './validators/TimeValidator.js';
 import NicknameValidator from './validators/NicknameValidator.js';
+import DateValidator from './validators/DateValidator.js';
 
 class App {
   async run() {
     const menu = await Console.readLineAsync('기능을 선택하세요: ');
 
     if (menu === '1') {
+      DateValidator.validateIsWorkingDay();
+
       const nickname = await Console.readLineAsync('닉네임을 입력하세요: ');
       NicknameValidator.validate(nickname);
 
