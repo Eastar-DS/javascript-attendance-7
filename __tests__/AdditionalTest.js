@@ -103,4 +103,24 @@ describe('추가 테스트', () => {
       expectedErrorMessage: '[ERROR] 아직 수정할 수 없습니다.',
     });
   });
+
+  test('지각 판정 테스트 - 월요일', async () => {
+    mockNowDate('2024-12-16');
+
+    await run({
+      inputs: ['1', '짱수', '13:06'],
+      inputsToTerminate: INPUTS_TO_TERMINATE,
+      expected: ['12월 16일 월요일 13:06 (지각)'],
+    });
+  });
+
+  test('지각 판정 테스트 - 화요일', async () => {
+    mockNowDate('2024-12-17');
+
+    await run({
+      inputs: ['1', '짱수', '10:06'],
+      inputsToTerminate: INPUTS_TO_TERMINATE,
+      expected: ['12월 17일 화요일 10:06 (지각)'],
+    });
+  });
 });
