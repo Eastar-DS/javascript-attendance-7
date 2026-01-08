@@ -85,4 +85,13 @@ describe('추가 테스트', () => {
         '[ERROR] 이미 출석을 확인하였습니다. 필요한 경우 수정 기능을 이용해 주세요.',
     });
   });
+
+  test('운영 시간 외 입력 예외 테스트', async () => {
+    mockNowDate('2024-12-13');
+
+    await runExceptions({
+      inputs: ['1', '짱수', '07:59'],
+      expectedErrorMessage: '[ERROR] 캠퍼스 운영 시간에만 출석이 가능합니다.',
+    });
+  });
 });
