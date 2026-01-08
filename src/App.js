@@ -1,7 +1,8 @@
-import { Console } from '@woowacourse/mission-utils';
+import { Console, DateTimes } from '@woowacourse/mission-utils';
 import TimeValidator from './validators/TimeValidator.js';
 import NicknameValidator from './validators/NicknameValidator.js';
 import DateValidator from './validators/DateValidator.js';
+import AttendanceService from './services/AttendanceService.js';
 
 class App {
   async run() {
@@ -16,7 +17,9 @@ class App {
       const time = await Console.readLineAsync('등교 시간을 입력하세요: ');
       TimeValidator.validate(time);
 
-      Console.print(nickname); // TODO: 임시로 사용
+      const today = DateTimes.now();
+      const record = AttendanceService.formatAttendanceRecord(today, time);
+      Console.print(record);
     }
   }
 }
