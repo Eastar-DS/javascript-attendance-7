@@ -94,4 +94,13 @@ describe('추가 테스트', () => {
       expectedErrorMessage: '[ERROR] 캠퍼스 운영 시간에만 출석이 가능합니다.',
     });
   });
+
+  test('미래 날짜 수정 방지 테스트', async () => {
+    mockNowDate('2024-12-13');
+
+    await runExceptions({
+      inputs: ['2', '짱수', '14', '10:00'],
+      expectedErrorMessage: '[ERROR] 아직 수정할 수 없습니다.',
+    });
+  });
 });

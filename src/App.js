@@ -62,6 +62,13 @@ class App {
     const dayInput = await Console.readLineAsync('수정하려는 날짜를 입력하세요: ');
     const day = parseInt(dayInput, 10);
 
+    const today = DateTimes.now();
+    const todayDay = today.getDate();
+
+    if (day > todayDay) {
+      throw new Error('[ERROR] 아직 수정할 수 없습니다.');
+    }
+
     const time = await Console.readLineAsync('등교 시간을 입력하세요: ');
     TimeValidator.validate(time);
 
