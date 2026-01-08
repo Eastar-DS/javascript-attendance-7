@@ -31,9 +31,7 @@ const getLogSpy = () => {
   return logSpy;
 };
 
-const getOutput = (logSpy) => {
-  return [...logSpy.mock.calls].join(LINE_SEPARATOR);
-};
+const getOutput = (logSpy) => [...logSpy.mock.calls].join(LINE_SEPARATOR);
 
 const expectLogContains = (received, expects) => {
   expects.forEach((exp) => {

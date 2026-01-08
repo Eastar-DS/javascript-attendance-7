@@ -349,8 +349,8 @@ module.exports = {
   // 8.4: 화살표 함수 매개변수 괄호
   arrowParens: 'always',
 
-  // 19.5: 파일 끝 개행 (LF)
-  endOfLine: 'lf',
+  // 19.5: 파일 끝 개행 (운영체제에 따라 자동)
+  endOfLine: 'auto',
 
   // 3.6: 필요한 경우만 프로퍼티 따옴표
   quoteProps: 'as-needed',
