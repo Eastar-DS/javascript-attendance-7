@@ -97,6 +97,63 @@ class AttendanceRepository {
     if (totalAbsent >= 2) return '경고 대상자';
     return null;
   }
+
+  getAllCrewsAtRisk(startDate, endDate) {
+    const nicknames = ['쿠키', '빙봉', '빙티', '이든', '짱수'];
+    const crewsData = [];
+
+    nicknames.forEach((nickname) => {
+      const { attendCount, lateCount, absentCount } = this.getCrewSummary(
+        nickname,
+        startDate,
+        endDate
+      );
+      const totalAbsent = absentCount + Math.floor(lateCount / 3);
+      const category = this.getCrewCategory(absentCount, lateCount);
+
+      if (category) {
+        crewsData.push({
+          nickname,
+          attendCount,
+          lateCount,
+          absentCount,
+          totalAbsent,
+          category,
+        });
+      }
+    });
+
+    // 정렬: 결석 많은 순, 닉네임 오름차순
+    crewsData.sort((a, b) => {
+      if (b.totalAbsent !== a.totalAbsent) {
+        return b.totalAbsent - a.totalAbsent;
+      }
+      return a.nickname.localeCompare(b.nickname);
+    });
+
+    // 카테고리별로 분류
+    const result = {
+      제적_대상자: [],
+      면담_대상자: [],
+      경고_대상자: [],
+    };
+
+    crewsData.forEach((crew) => {
+      if (crew.category === '제적 대상자') {
+        result.제적_대상자.push(crew);
+      } else if (crew.category === '면담 대상자') {
+        result.면담_대상자.push(crew);
+      } else if (crew.category === '경고 대상자') {
+        result.경고_대상자.push(crew);
+      }
+    });
+
+    return {
+      제적_대상자: result.제적_대상자,
+      면담_대상자: result.면담_대상자,
+      경고_대상자: result.경고_대상자,
+    };
+  }
 }
 
 export default AttendanceRepository;

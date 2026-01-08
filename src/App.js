@@ -29,6 +29,8 @@ class App {
       } else if (menu === '3') {
         // eslint-disable-next-line no-await-in-loop
         await this.handleCrewRecords();
+      } else if (menu === '4') {
+        this.handleAtRiskCrews();
       }
     }
   }
@@ -85,6 +87,26 @@ class App {
     if (category) {
       Console.print(category);
     }
+  }
+
+  handleAtRiskCrews() {
+    const atRiskData = this.repository.getAllCrewsAtRisk('2024-12-02', '2024-12-12');
+
+    const categories = [
+      { key: '제적_대상자', name: '제적 대상자' },
+      { key: '면담_대상자', name: '면담 대상자' },
+      { key: '경고_대상자', name: '경고 대상자' },
+    ];
+
+    categories.forEach(({ key, name }) => {
+      const crews = atRiskData[key];
+      if (crews && crews.length > 0) {
+        Console.print(`\n${name}`);
+        crews.forEach((crew) => {
+          Console.print(`- ${crew.nickname}: 결석 ${crew.totalAbsent}회`);
+        });
+      }
+    });
   }
 }
 
