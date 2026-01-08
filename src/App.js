@@ -45,6 +45,12 @@ class App {
     TimeValidator.validate(time);
 
     const today = DateTimes.now();
+
+    if (this.repository.hasAttendance(nickname, today)) {
+      throw new Error('[ERROR] 이미 출석을 확인하였습니다. 필요한 경우 수정 기능을 이용해 주세요.');
+    }
+
+    this.repository.addAttendance(nickname, today, time);
     const record = AttendanceService.formatAttendanceRecord(today, time);
     Console.print(record);
   }

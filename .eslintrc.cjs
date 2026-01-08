@@ -137,7 +137,7 @@ module.exports = {
     'one-var': ['error', 'never'], // 13.2: 변수마다 const/let 사용
     'no-multi-assign': 'error', // 13.4: 연쇄 할당 금지
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }], // 13.5: ++ -- 연산자 금지
-    'operator-linebreak': ['error', 'before'], // 13.6: 연산자 줄바꿈은 앞에
+    'operator-linebreak': 'off', // 13.6: Prettier가 처리하도록 비활성화
     'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }], // 13.7: 사용하지 않는 변수 금지
     eqeqeq: ['error', 'always'], // 15.1: === !== 사용
 

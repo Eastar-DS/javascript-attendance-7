@@ -16,13 +16,32 @@ class AttendanceRepository {
     });
   }
 
+  hasAttendance(nickname, date) {
+    const dateStr =
+      typeof date === 'string'
+        ? date
+        : `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const key = `${nickname}-${dateStr}`;
+    return this.records.has(key);
+  }
+
+  addAttendance(nickname, date, time) {
+    const dateStr =
+      typeof date === 'string'
+        ? date
+        : `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const key = `${nickname}-${dateStr}`;
+    this.records.set(key, time);
+  }
+
   modifyAttendance(nickname, month, day, newTime) {
     const date = `2024-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const key = `${nickname}-${date}`;
     const oldTime = this.records.get(key) || '--:--';
 
     const dateObj = new Date(date);
-    const oldStatus = oldTime === '--:--' ? '결석' : AttendanceService.determineStatus(dateObj, oldTime);
+    const oldStatus =
+      oldTime === '--:--' ? '결석' : AttendanceService.determineStatus(dateObj, oldTime);
     const newStatus = AttendanceService.determineStatus(dateObj, newTime);
 
     this.records.set(key, newTime);
@@ -90,6 +109,7 @@ class AttendanceRepository {
     return { attendCount, lateCount, absentCount };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getCrewCategory(absentCount, lateCount) {
     const totalAbsent = absentCount + Math.floor(lateCount / 3);
     if (totalAbsent > 5) return '제적 대상자';
