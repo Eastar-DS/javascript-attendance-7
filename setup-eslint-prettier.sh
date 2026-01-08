@@ -272,16 +272,7 @@ module.exports = {
 
     // Commas (20.x)
     'comma-style': ['error', 'last'], // 20.1: 쉼표를 끝에
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'always-multiline',
-        objects: 'always-multiline',
-        imports: 'always-multiline',
-        exports: 'always-multiline',
-        functions: 'always-multiline',
-      },
-    ], // 20.2: 후행 쉼표 사용
+    // 20.2: 후행 쉼표는 Prettier가 처리 (prettier/recommended가 자동 비활성화)
 
     // Semicolons (21.x)
     semi: ['error', 'always'], // 21.1: 세미콜론 사용
@@ -349,8 +340,8 @@ module.exports = {
   // 19.12: 최대 줄 길이 100
   printWidth: 100,
 
-  // 20.2: 후행 쉼표 사용
-  trailingComma: 'all',
+  // 20.2: 후행 쉼표 사용 (ES5: 객체, 배열만. 함수 파라미터는 제외)
+  trailingComma: 'es5',
 
   // 19.11: 객체 중괄호 공백
   bracketSpacing: true,
